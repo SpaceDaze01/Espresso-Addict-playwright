@@ -5,14 +5,14 @@ Feature: Help and continue
     Scenario: continue after reading instructions in the help section
     Given that the user is on the main page "<localhost>"
     When the user clicks on the "Help" button
-    And reads the text "<info>"
-    Then the user should be able to go back where I they were before "<outsideCafe>" by clicking on the "Continue" button
+    And should contain the following text "You're a hipster."
+    Then the user should be able to go back where they were before by clicking on the "Continue" button
 
 
 
     Examples:
-      | localhost             | info                                                                                                                                                                                                                                                                                                                            | outsideCafe                                                         |
-      | http://localhost:3000 | You're a hipster. And you love iThings and your cool bag. But right now you're almost broke. And that's bad. Because you're an Espresso Addict too, a caffeine junkie. You need your fix: 5 cups of espresso. Otherwise you will soon start to feel really shaky! So go get your fix... Lurk around and wait for opportunities! | You are standing outside the Cloud Forest Cafe. The sun is shining. |
+      | localhost             |                                                                                                                                                                                                                                                                                                                         
+      | http://localhost:3000 | 
 
 
 
