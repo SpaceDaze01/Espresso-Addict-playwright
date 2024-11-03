@@ -23,7 +23,7 @@ BeforeStep(function (info) {
 AfterStep(async function () {
   await sleep(stepSleep);
 });
-
+// Funkar inte med get beer testet och win the game funkar inte heller
 AfterAll(async function () {
   await browser.close();
 });
