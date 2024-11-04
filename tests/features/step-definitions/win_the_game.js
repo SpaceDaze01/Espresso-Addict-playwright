@@ -1,35 +1,29 @@
 // import { Given, When, Then } from '@cucumber/cucumber';
 // import { expect } from 'chai';
-// import { navigateTo, getWhereIAm, getMenuChoiceElement, getAllCurrentMenuChoices, checkIfDescriptionContainsString, cheatIfNeeded } from './helpers.js'
-// // import { By, until, Key } from 'selenium-webdriver';
+// import { navigateTo, getWhereIAm, getMenuChoiceElement, checkIfDescriptionContainsString, getAllCurrentMenuChoices, cheatIfNeeded } from './helpers.js'
+
 
 // Given('that I have started the game by navigating to {string}', async function (url) {
-//   await this.gotoUrl(url);
-//   // Important: wait for the relevant DOM element(s) to exist
-//   // - we should choose to wait for an element we expect to only be in the DOM
-//   //   with correct content/text to verify that the app has fully loaded
-//   await this.getByXPathWait('/descendant::*[@class="health"]//*[contains(text(), "50")]', 1000);
-//   await this.getWait('.choices ul li:nth-child(2)', 1000);
+//   await this.driver.get(url);
+//   await this.getByXPathWait('/descendant::*[@class="health"]//*[contains(text(), "50")]');
 // });
 
-// // Check the value of health, money, and espresso shots
 // Then('the value of my {string} should be {float}', async function (statusType, expectedNumValue) {
-//   // Create CSS selector for the status type
-//   const cssSelector = `.${statusType.toLowerCase() === 'espressos' ? 'espressocups' : statusType.toLowerCase()} .progress`;
+//   let cssSelector = '.' + statusType.toLowerCase();
+//   if (cssSelector === '.espressos') { cssSelector = '.espressocups'; }
 
-//   // Get the text content and parse it as a float
-//   const numValue = parseFloat(await this.page.locator(cssSelector).textContent());
+//   cssSelector += ' .progress';
 
-//   // Verify the value is correct
+//   let element = await this.get(cssSelector);
+//   let numValue = +(await element.getText());
+
 //   expect(numValue).to.equal(expectedNumValue);
 // });
 
-// // Check the contents of the hipster bag
 // Then('my hipster bag should contain {string}', async function (expectedBagContent) {
-//   // Get the bag content and trim whitespace
-//   const bagContent = (await this.page.locator('.bag-content').textContent()).trim();
+//   let bagElement = await this.get('.bag-content');
+//   let bagContent = (await bagElement.getText()).trim();
 
-//   // Verify the bag content is correct
 //   expect(bagContent).to.equal(expectedBagContent);
 // });
 
@@ -37,38 +31,70 @@
 //   expect(await getWhereIAm(this)).to.equal(position);
 // });
 
-// Given('that I make the choice to {string}', async function (BtnChoice) {
-//   let ButtonChoice = await getMenuChoiceElement(this, BtnChoice);
-//   await ButtonChoice.click();
+// Given('that I make the choice to {string}', async function (choiceText) {
+//   let { choiceElements, choices } = await getAllCurrentMenuChoices(this);
+//   expect(choices).to.contain(choiceText);
+//   let index = choices.indexOf(choiceText);
+//   await choiceElements[index].click();
 // });
 
-// Then('my position should be {string}', async function (location) {
-//   expect(await getWhereIAm(this)).to.equal(location);
+// Then('my position should be {string}', async function (expectedPosition) {
+//   await navigateTo(this, expectedPosition);
+//   expect(await getWhereIAm(this)).to.equal(expectedPosition);
 // });
 
-// Given('that I know my current health', async function (healthBar) {
-//   await this.getByXPathWait('/descendant::*[@class="health"]', 1000);
-//   await checkIfDescriptionContainsString(this, healthBar, true);
+// Given('that I know my current health', async function () {
+//   let healthElement = await this.get('.health .progress');
+//   let currentHealth = +(await healthElement.getText());
+//   this.currentHealth = currentHealth;
+
 // });
 
 // When('I wait for the event {string} to take place', async function (event) {
-//   while (!await checkIfDescriptionContainsString(this, event, true)) {
 
-//     await cheatIfNeeded(this);
-
-//     let waitButton = await getMenuChoiceElement(this, 'Wait');
-//     await waitButton.click();
+//   let isEventDescriptionCorrect
+//   while (!isEventDescriptionCorrect) {
+//     isEventDescriptionCorrect = await checkIfDescriptionContainsString(this, event, true);
+//     let choiceElement = await getMenuChoiceElement(this, 'Wait');
+//     await choiceElement.click();
 //   }
+//   expect(isEventDescriptionCorrect).to.be.true;
 // });
 
-// Then('my health should be {string}', async function (healthPoints) {
-//   await checkIfDescriptionContainsString(this, healthPoints, true);
+// Then('my health should be {string}', async function (expectedHealth) {
+
+//   let healthElement = await this.get('.health .progress');
+//   let currentHealth = +(await healthElement.getText());
+
+//   if (expectedHealth === 'less or same as before') {
+//     await cheatIfNeeded(this);
+//     expect(currentHealth).to.be.most(this.currentHealth);
+//     return
+//   }
+//   if (expectedHealth === 'unchanged') {
+//     await cheatIfNeeded(this);
+//     expect(currentHealth).to.equal(this.currentHealth);
+//     return
+//   }
+//   if (expectedHealth === '20 more than before') {
+//     await cheatIfNeeded(this);
+//     expect(currentHealth).to.equal(this.currentHealth + 20);
+//     return
+//   }
+//   if (expectedHealth === '10 more than before') {
+//     await cheatIfNeeded(this);
+//     expect(currentHealth).to.equal(this.currentHealth + 10);
+//     return
+//   }
+//   expect(currentHealth).to.equal(expectedHealth);
 // });
 
 // Given('that I know my current menu choices', async function () {
-//   await getAllCurrentMenuChoices(this);
+//   let menuChoices = await getAllCurrentMenuChoices(this);
+//   this.currentMenuChoices = menuChoices;
 // });
 
 // Then('I should be given the new choice {string}', async function (newChoice) {
-//   await getMenuChoiceElement(this, newChoice)
+//   let choiceElement = await getMenuChoiceElement(this, newChoice);
+//   await choiceElement.click();
 // });

@@ -55,7 +55,6 @@
 #   Scenario: I choose to jam with the guitarist and the sax player
 #     Given that my position is "at the concert"
 #     And that I know my current health
-#     And that I make the choice to "Jam with the band"
 #     Then my health should be "unchanged"
 #     And the value of my "Money" should be 15
 #     And the value of my "Espressos" should be 0
@@ -82,12 +81,11 @@
 #     And the value of my "Money" should be 15
 #     And the value of my "Espressos" should be 0
 #     And my hipster bag should contain "a can of beer"
-#     And I should be given the new choice "Give beer to barista"
 
 #   Scenario: I give the barista my beer
 #     Given that my position is "inside the cafe"
 #     And that I know my current health
-#     And that I make the choice to "Give beer to barista"
+#     And I should be given the new choice "Give beer to barista"
 #     Then my health should be "20 more than before"
 #     And the value of my "Money" should be 15
 #     And the value of my "Espressos" should be 2
@@ -121,12 +119,3 @@
 #     And the value of my "Espressos" should be 5
 #     And my hipster bag should contain "nothing cool"
 #     And I should be given the new choice "Play again"
-
-    
-
-#     Examples:
-#       | locationIs       | locationBy       | healthBar | healthStatus           | moneyBar | espressoCups | hipsterBag    | event                                            | decisions | newChoice            |
-#       | outside the cafe | in a crowded bar | 50        | less or same as before | 10       | 0            | nothing cool  | The bartender offers you a can of beer for free  | Go north  | Jam with the band    |
-#       | in a crowded bar | at the concert   |           | unchanged              |          |              | a can of beer | why don't come on up and jam with us?            | Go south  | Give beer to barista |
-#       | at the concert   | inside the cafe  |           | 20 more than before    |          |              |               | The barista is in a dark corner phoning a friend | Go west   | Play again           |
-#       | inside the cafe  |                  |           | 10 more than before    |          |              |               |                                                  | Go east   |                      |
