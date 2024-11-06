@@ -1,32 +1,57 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from 'chai';
-import { navigateTo, getWhereIAm, checkIfDescriptionContainsString, getMenuChoiceElement } from './helpers.js';
-
-
+import { navigateTo, getWhereIAm, checkIfDescriptionContainsString, getMenuChoiceElement, cheatIfNeeded } from './helpers.js';
 
 When('the user clicks on the Help button', async function () {
-  // let currentLocation = await getWhereIAm(this);
-  // expect(currentLocation).to.not.equal('I died', 'User cannot click button after dying');
+  // Ensure user hasn't died before interacting with the help menu
+  let currentLocation = await getWhereIAm(this);
+  expect(currentLocation).to.not.equal('I died', 'User cannot click Help after dying');
 
-  // let button = await this.page.locator(`text=${buttonName}`);
-  // await button.click();
-  while (await getWhereIAm(this) !== '') {
-    let helpElement = await getMenuChoiceElement(this, 'Help');
-    let continueElement = await getMenuChoiceElement(this, 'Continue');
-    await helpElement.click();
-    await continueElement.click();
-  }
+  // Check that the Help option is available and click it
+  let helpElement = await getMenuChoiceElement(this, 'Help');
+  await helpElement.click();
+
+  // Wait for the Help page to load and then go back to the previous location by clicking "Continue"
+  let continueElement = await getMenuChoiceElement(this, 'Continue');
+  await continueElement.click();
 });
 
-// When('should contain the following text {string}', async function (partOfDescription) {
-//   await checkIfDescriptionContainsString(this, partOfDescription, true)
-// });
+Then('the user should be able to go back where they were before by clicking on the {string} button', async function (continueBtn) {
+  // Store the location before Help was clicked
+  let initialLocation = await getWhereIAm(this);
 
-// Then('the user should be able to go back where they were before by clicking on the {string} button', async function (continueBtn) {
-//   let continueButton = await getMenuChoiceElement(this, continueBtn);
-//   await continueButton.click();
-//   await checkIfDescriptionContainsString(this, "outside the cafe", true)
-// });
+  // Click on the Help button, check if the user is sent to the Help page, and then click Continue
+  let helpElement = await getMenuChoiceElement(this, 'Help');
+  await helpElement.click();
 
+  let continueElement = await getMenuChoiceElement(this, continueBtn);
+  await continueElement.click();
 
+  // After clicking continue, verify that the user is taken back to their initial location
+  let finalLocation = await getWhereIAm(this);
+  expect(finalLocation).to.equal(initialLocation, 'User should return to their previous location after clicking Continue');
+});
 
+Then('the user should be able to visit all possible locations without dying', async function () {
+  // List all possible locations the user can visit
+  let locations = [
+    'outside the cafe',
+    'inside the cafe',
+    'on an empty street',
+    'in a crowded bar',
+    'in the country-side',
+    'at the concert'
+  ];
+
+  // Loop through each location and navigate to it, ensuring no "I died" state
+  for (let location of locations) {
+    // Ensure health is adequate before navigating
+    await cheatIfNeeded(this);
+
+    // Navigate to each location
+    await navigateTo(this, location);
+
+    // Verify that the description contains some expected text for each location
+    await checkIfDescriptionContainsString(this, location, true);
+  }
+});

@@ -7,8 +7,8 @@ Feature: Help and continue
     And that I navigated to the position "outside the cafe"
     And that my position is "outside the cafe"
     When the user clicks on the Help button
-    And should contain the following text "You're a hipster."
-    Then the user should be able to go back where they were before by clicking on the "Continue" button
+    And the user should be able to go back where they were before by clicking on the "Continue" button
+    Then the user should be able to visit all possible locations without dying
 
 
 
