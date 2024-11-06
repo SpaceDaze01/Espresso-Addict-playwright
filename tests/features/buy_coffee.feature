@@ -3,12 +3,11 @@ Feature: Buy a coffee
 
 
   Scenario: Buy a coffee
-    Given that the user is on the game on the site "http://localhost:3000"
-    And the users current location is "<location>"
+    Given that I have started the game by navigating to "http://localhost:3000"
+    And that I navigated to the position "outside the cafe"
+    And that my position is "outside the cafe"
     When the user "Enter the cafe"
     Then the user should have enuough "Money" to buy an espresso
     And user should get an "Espresso"
 
-    Examples:
-      | location         |
-      | outside the cafe |
+  
