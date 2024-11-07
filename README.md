@@ -15,6 +15,8 @@ Note! Those can vary depending on which website you choose from using in your te
 
 Add tests!
 
+Work on win_the_game.js
+
 # Tests done
 
 

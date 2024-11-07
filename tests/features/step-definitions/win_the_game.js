@@ -1,15 +1,18 @@
 
 import { Given, When, Then } from '@cucumber/cucumber';
-import { By, until, Key } from 'selenium-webdriver';
+import { navigateTo, getWhereIAm, getMenuChoiceElement, checkIfDescriptionContainsString, getAllCurrentMenuChoices, cheatIfNeeded } from './helpers.js'
 import { expect } from 'chai';
-
-When('I {string}', async function(interactions){
-  // TODO: implement step
+//FIXA
+When('I {string}', async function(interaction){
+  if (interaction === 'Enter the cafe') {
+    await page.click('button.enter-cafe');
+  }
 });
 
-When('I buy {float} espressos at once', async function(a){
-  // TODO: implement step
-});
+//fortsätt här
+When('I buy {float} espressos at once', async function(quantity){
+  
+  });
 
 Then('my {string} should be {float} coins', async function(MoneyBar, a){
   // TODO: implement step
