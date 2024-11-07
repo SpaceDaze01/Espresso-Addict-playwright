@@ -10,7 +10,7 @@ When('I {string}', async function(interaction){
 });
 
 //fortsätt här
-When('I buy {float} espressos at once', async function(quantity){
+When('I buy {float} espressos at once', async function(){
   
   });
 
