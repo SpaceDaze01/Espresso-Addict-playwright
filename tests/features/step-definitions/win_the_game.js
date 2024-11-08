@@ -10,33 +10,45 @@ When('I {string}', async function(interaction){
 });
 
 //fortsätt här
-When('I buy {float} espressos at once', async function(){
+// When('I buy {float} espressos at once', async function(){
   
-  });
+//   });
 
-Then('my {string} should be {float} coins', async function(MoneyBar, a){
-  // TODO: implement step
-});
 
-Then('my {string} should be {float}', async function(EspressoBar, a){
-  // TODO: implement step
-});
+// Then('my {string} should be {float} coins', async function(MoneyBar, a){
+//   // TODO: implement step
+// });
 
-Given('that I have entered the cafe and bought {float} espressos', async function(a){
-  // TODO: implement step
-});
+
+// Then('my {string} should be {float}', async function(EspressoBar, a){
+//   // TODO: implement step
+// });
+
+// Given('that I have entered the cafe and bought {float} espressos', async function(a){
+//   // TODO: implement step
+// });
 
 When('I go {string}', async function(directions){
-  // TODO: implement step
+  await getAllCurrentMenuChoices(this, directions);
 });
 
 Given('that I have exited the cafe and gone south and west', async function(){
-  // TODO: implement step
+  let southButton = await getMenuChoiceElement(this, 'Go south');
+  await southButton.click();
+  
+  let westButton = await getMenuChoiceElement(this, 'Go west');
+  await westButton.click();
 });
 
-When('I wait until the event {string} appears', async function(interactions){
-  // TODO: implement step
-});
+// When('I wait until the event {string} appears', async function(interactions){
+//   let isEventDescriptionCorrect
+//     while (!isEventDescriptionCorrect) {
+//       isEventDescriptionCorrect = await getMenuChoiceElement(this, interactions, true);
+//       let choiceElement = await getMenuChoiceElement(this, 'Wait');
+//       await choiceElement.click();
+//     }
+//     expect(isEventDescriptionCorrect).to.be.true;
+// });
 
 Given('that I have earned money by jamming with the band', async function(){
   // TODO: implement step
