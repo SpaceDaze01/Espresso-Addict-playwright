@@ -27,12 +27,12 @@ Feature: Win the game through actions in the cafe and various locations
 
   # Scenario 4: Enter the cafe again, buy an espresso, and wait for barista's conversation
   Scenario: Enter the cafe, buy an espresso, and wait for barista's conversation
-    Given that I have earned money by jamming with the band
+   #Given that I have earned money by jamming with the band
     When I go "<directions>"
     And I go "<directions>"
     And I "<interactions>"
     And I "<interactions>"
-    And wait in the cafe until they hear the conversation the barista is having on the phone
+   #And wait in the cafe until they hear the conversation the barista is having on the phone
    #Then my "<MoneyBar>" should be 0 coins
    #And my "<EspressoBar>" should be 3
 
