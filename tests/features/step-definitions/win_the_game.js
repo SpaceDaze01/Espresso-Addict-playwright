@@ -77,7 +77,13 @@ When('I wait until the event {string} appears', async function(interactions){
 // });
 
 // When('wait in the cafe until they hear the conversation the barista is having on the phone', async function(){
-//   // TODO: implement step
+//   while (!await checkIfDescriptionContainsString(this, 'I just want a beer', true)) {
+
+//     await cheatIfNeeded(this);
+
+//     let waitButton = await getMenuChoiceElement(this, 'Wait');
+//     await waitButton.click();
+//   }
 // });
 
 // Then('my {string} should be {float}', async function(EspressoBar, a){
