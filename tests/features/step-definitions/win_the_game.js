@@ -8,8 +8,10 @@ When('I {string}', async function(interaction){
   this.currentMenuChoices = menuChoices;
 });
 
-// When('I click {string} twice', async function(interactions){
-//   // TODO: implement step
+// When('I click {string} twice', async function(buyEspresso){
+//   let buyButton = await getMenuChoiceElement(this, buyEspresso);
+//   await buyButton.click();
+//   await buyButton.click();
 // });
 
 // Then('my {string} should show {float} coins', async function(MoneyBar, a){
