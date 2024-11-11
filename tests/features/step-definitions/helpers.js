@@ -94,7 +94,9 @@ export async function getMenuChoiceElement(world, choice) {
   // check if the choice exists and its index
   let { choiceElements, choices } = await getAllCurrentMenuChoices(world);
   let index = choices.indexOf(choice);
+  console.log(index, 'index')
   // expect the choice to exist
+  console.log(choices, choice, 'loggar')
   expect(index).to.be.above(-1);
   // return the element
   return choiceElements[index];
