@@ -2,24 +2,21 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { navigateTo, getWhereIAm, getMenuChoiceElement, checkIfDescriptionContainsString, getAllCurrentMenuChoices, cheatIfNeeded } from './helpers.js'
 import { expect } from 'chai';
-//FIXA
+
 When('I {string}', async function(interaction){
   let menuChoices = await getAllCurrentMenuChoices(this, interaction);
   this.currentMenuChoices = menuChoices;
 });
 
-//fortsätt här
-// When('I buy {float} espressos at once', async function(){
-  
-//   });
-
-
-// Then('my {string} should be {float} coins', async function(MoneyBar, a){
+// When('I click {string} twice', async function(interactions){
 //   // TODO: implement step
 // });
 
+// Then('my {string} should show {float} coins', async function(MoneyBar, a){
+//   // TODO: implement step
+// });
 
-// Then('my {string} should be {float}', async function(EspressoBar, a){
+// Then('my {string} should show {float} espressos', async function(EspressoBar, a){
 //   // TODO: implement step
 // });
 
@@ -27,9 +24,17 @@ When('I {string}', async function(interaction){
 //   // TODO: implement step
 // });
 
+// When('I {string}', async function(a){
+//   // TODO: implement step
+// });
+
 When('I go {string}', async function(directions){
   await getAllCurrentMenuChoices(this, directions);
 });
+
+// When('I go {string}', async function(GoWest){
+//   // TODO: implement step
+// });
 
 Given('that I have exited the cafe and gone south and west', async function(){
   let southButton = await getMenuChoiceElement(this, 'Go south');
@@ -39,36 +44,51 @@ Given('that I have exited the cafe and gone south and west', async function(){
   await westButton.click();
 });
 
-// When('I wait until the event {string} appears', async function(interactions){
-//   let isEventDescriptionCorrect
-//     while (!isEventDescriptionCorrect) {
-//       isEventDescriptionCorrect = await getMenuChoiceElement(this, interactions, true);
-//       let choiceElement = await getMenuChoiceElement(this, 'Wait');
-//       await choiceElement.click();
-//     }
-//     expect(isEventDescriptionCorrect).to.be.true;
+When('I wait until the event {string} appears', async function(interactions){
+  while (!await getAllCurrentMenuChoices(this, interactions, true)) {
+    
+    await cheatIfNeeded(this);
+    
+    let waitButton = await getMenuChoiceElement(this, 'Wait');
+    await waitButton.click();
+  }
+});
+
+// Then('my {string} should be {float} coins', async function(MoneyBar, a){
+//   // TODO: implement step
 // });
 
 // Given('that I have earned money by jamming with the band', async function(){
 //   // TODO: implement step
 // });
 
-// When('wait in the cafe until they hear the conversation the barista is having on the phone', async function(){
-//   while (!await checkIfDescriptionContainsString(this, 'I just want a beer', true)) {
-
-//     await cheatIfNeeded(this);
-
-//     let waitButton = await getMenuChoiceElement(this, 'Wait');
-//     await waitButton.click();
-//   }
+// When('I go {string}', async function(GoEast){
+//   // TODO: implement step
 // });
 
-//FIXA
-Given('that my location is {string}', async function (SpecificPosition) { 
-  expect(await getWhereIAm(this)).to.equal(SpecificPosition);
+// When('I go {string}', async function(GoNorth){
+//   // TODO: implement step
+// });
+
+// When('I {string}', async function(BuyEspresso){
+//   // TODO: implement step
+// });
+
+// When('wait in the cafe until they hear the conversation the barista is having on the phone', async function(){
+//   // TODO: implement step
+// });
+
+// Then('my {string} should be {float}', async function(EspressoBar, a){
+//   // TODO: implement step
+// });
+
+Given('that my location is {string}', async function(position){
+  await getWhereIAm(this, position, true)
 });
 
-
+// When('I {string}', async function(ExitCafe){
+//   // TODO: implement step
+// });
 
 Then('my location should be {string}', async function(expectedPosition){
   await navigateTo(this, expectedPosition);
@@ -82,36 +102,31 @@ Given('that I am {string}', async function(position){
 When('the user waits long enough for the bartender to give a beer', async function(){
   while (!await checkIfDescriptionContainsString(this, 'The bartender offers you a can of beer for free', true)) {
 
-    await cheatIfNeeded(this);
+      await cheatIfNeeded(this);
 
-    let waitButton = await getMenuChoiceElement(this, 'Wait');
-    await waitButton.click();
-  }
+      let waitButton = await getMenuChoiceElement(this, 'Wait');
+      await waitButton.click();
+    }
 });
 
 Then('my hipster bag should include {string}', async function(thing){
-  // get all the text in the hipster bag element
   let textInBag = await this.getText(await this.get('.bag-content'));
-  // check if the string thing is part of the text
   expect(textInBag).to.contain(thing);
 });
 
 Given('that I have {string} in my hipster bag', async function(beverage){
-  // get all the text in the hipster bag element
   let textInBag = await this.getText(await this.get('.bag-content'));
-  // check if the string thing is part of the text
   expect(textInBag).to.contain(beverage); 
-  
-  let GiveButton = await getMenuChoiceElement(this, 'Give beer to barista');
-  await GiveButton.click();
-
 });
+
+// When('I {string}', async function(GiveBeerToBarista){
+//   // TODO: implement step
+// });
 
 Then('I should win the game', async function(){
   await checkIfDescriptionContainsString(this, 'You feel alive and pumping.', true)
 });
 
-Then('I should be given the new choice {string}', async function (newChoice){
-  let choiceElement = await getMenuChoiceElement(this, newChoice);
-  await choiceElement.click();
+Then('I should be given the new choice {string}', async function(newChoice){
+  await getAllCurrentMenuChoices(this, newChoice, true);
 });
