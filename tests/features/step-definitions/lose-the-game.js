@@ -5,9 +5,7 @@ import { expect } from 'chai';
 
 Given('that I have started the game by navigating to {string}', async function (url) {
   await this.gotoUrl(url);
-  // Important: wait for the relevant DOM element(s) to exist
-  // - we should choose to wait for an element we expect to only be in the DOM
-  //   with correct content/text to verify that the app has fully loaded
+  
   await this.getByXPathWait('/descendant::*[@class="health"]//*[contains(text(), "50")]', 1000);
   await this.getWait('.choices ul li:nth-child(2)', 1000);
 });
@@ -21,7 +19,7 @@ Given('that my position is {string}', async function (position) {
 });
 
 When('I wait repeatedly until I die', async function () {
-  // continue to wait until we die
+  
   while (await getWhereIAm(this) !== 'I died') {
     let menuChoiceElement = await getMenuChoiceElement(this, 'Wait');
     await menuChoiceElement.click();
