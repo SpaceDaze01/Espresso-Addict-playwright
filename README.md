@@ -16,4 +16,4 @@ We have done 23 tests but win the game is not completed.
 # Problems
 We had issues with finding some elements when we did our tests. We received error messages that there were errors with Hooks.js and Helpers.js.
 Sometimes we had problems reusing code in our tests. Uncommented tests in win the game are tests that we have not been able to solve.
-Due to lack of time, we only had time to do one test on how to win the game.
+Due to lack of time, we only had time to do one test on how to win the game...
